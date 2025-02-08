@@ -32,13 +32,6 @@ def create_app():
 
 app = create_app()
 
-# # Create database tables
-# with app.app_context():
-#     db.create_all()
-
-# Initialize database migration
-# migrate = Migrate(app, db)
-
 
 def create_filtering_query(filters):
     """
