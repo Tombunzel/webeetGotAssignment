@@ -11,19 +11,47 @@ This API uses a PostgreSQL database, includes user authentication and authorizat
 * [![Flask][Flask]][Flask-url]
 * [![JWT][JWT]][JWT-url]
 
-## Install
+## Clone the repository
 
-As a first step
+using GitHub CLI:
 
-    bundle install
+    gh repo clone Tombunzel/webeetGotAssignment
+
+using git:
+
+    git clone https://github.com/Tombunzel/webeetGotAssignment.git
+
+[Troubleshooting cloning](https://github.com/Tombunzel/webeetGotAssignment.git)
+
+## Install requirements
+
+Make sure you are in the main folder of the repository, then run:
+
+    pip install -r requirements.txt
+
+## Create .env variables
+
+This API requires a .env file with the following variables:
+  - `JWT_KEY`: secret key for secure token creation and verification (HS256) 
+  - `SQLALCHEMY_DATABASE_URL`: connection string with necessary details for database connection. (`postgresql+psycopg2://username:password@host:port/database-name`)
+
+
+## Setup PostgreSQL database
+
+    python3 setup_database.py
+
 
 ## Run the app
 
-    unicorn -p 7000
+    python3 app.py
+
+or
+
+    python app.py
 
 ## Run the tests
 
-    ./run-tests.sh
+    pytest /testing/test_rest_api.py
 
 # REST API
 
