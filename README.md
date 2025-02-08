@@ -96,7 +96,7 @@ using git:
 
     git clone https://github.com/Tombunzel/webeetGotAssignment.git
 
-[Troubleshooting cloning](https://github.com/Tombunzel/webeetGotAssignment.git)
+[Troubleshooting cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository#troubleshooting-cloning-errors)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
