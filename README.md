@@ -1,8 +1,79 @@
-# REST API example application
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [] instead of parentheses ().
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+
+
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#setup">Setup</a>
+      <ul>
+        <li><a href="#clone-the-repository">Clone the Repository</a></li>
+        <li><a href="#install-requirements">Install Requirements</a></li>
+        <li><a href="#create-env-variables">Create .env Variables</a></li>
+        <li><a href="#setup-postgresql-database">Setup PostgreSQL Database</a></li>
+        <li><a href="#run-the-app">Run the App</a></li>
+      </ul>
+    </li>
+    <li><a href="#rest-api---endpoints">Endpoints</a></li>
+      <ul>
+        <li><a href="#create-a-new-user">Create a New User</a></li>
+        <li><a href="#login-fetch-token">Login (fetch token)</a></li>
+        <li><a href="#get-a-list-of-characters">Get a List of Characters</a></li>
+        <ul>
+            <li><a href="#pagination">Pagination</a></li>
+            <li><a href="#filtering">Filtering</a></li>
+            <li><a href="#sorting">Sorting</a></li>
+        </ul>
+        <li><a href="#get-character-by-id">Get Character by ID</a></li>
+        <li><a href="#create-a-new-character">Create a New Character</a></li>
+        <li><a href="#update-a-character">Update a Character</a></li>
+        <li><a href="#delete-a-character">Delete a Character</a></li>
+      </ul>
+    <li><a href="#data-models">Data Models</a></li>
+      <ul>
+        <li><a href="#user">User</a></li>
+        <li><a href="#character">Character</a></li>
+      </ul>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# REST API
+
+### About the project
 
 This is a REST API built as a software engineering assignment for webeet.io
-Basic CRUD operations are implemented, as well as pagination, filtering, sorting - separately or simultaneously.
-This API uses a PostgreSQL database, includes user authentication and authorization as well as some basic unit testing.
+Provided was a list of Game of Thrones characters, which the user can query.
+Basic CRUD operations are implemented, as well as pagination, filtering and sorting — separately or simultaneously.
+This API uses a PostgreSQL database, includes user authentication and authorization
+and features some basic unit testing.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
@@ -11,7 +82,13 @@ This API uses a PostgreSQL database, includes user authentication and authorizat
 * [![Flask][Flask]][Flask-url]
 * [![JWT][JWT]][JWT-url]
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# Setup
+
 ## Clone the repository
+
+[Troubleshooting cloning](https://github.com/Tombunzel/webeetGotAssignment.git)
 
 using GitHub CLI:
 
@@ -21,7 +98,8 @@ using git:
 
     git clone https://github.com/Tombunzel/webeetGotAssignment.git
 
-[Troubleshooting cloning](https://github.com/Tombunzel/webeetGotAssignment.git)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Install requirements
 
@@ -29,17 +107,21 @@ Make sure you are in the main folder of the repository, then run:
 
     pip install -r requirements.txt
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Create .env variables
 
-This API requires a .env file with the following variables:
+The API requires a .env file with the following variables:
   - `JWT_KEY`: secret key for secure token creation and verification (HS256) 
   - `SQLALCHEMY_DATABASE_URL`: connection string with necessary details for database connection. (`postgresql+psycopg2://username:password@host:port/database-name`)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Setup PostgreSQL database
 
     python3 setup_database.py
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Run the app
 
@@ -49,342 +131,394 @@ or
 
     python app.py
 
-## Run the tests
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-    pytest /testing/test_rest_api.py
 
-# REST API
+# REST API - Endpoints
 
-The REST API to the example app is described below.
+Listed below are the API's endpoints
 
-## Get list of Things
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Request
+## Create a new user
 
-`GET /thing/`
-
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 2
-
-    []
-
-## Create a new Thing
+Use this endpoint to create a user.
 
 ### Request
 
-`POST /thing/`
+URL: `.../signup`
 
-    curl -i -H 'Accept: application/json' -d 'name=Foo&status=new' http://localhost:7000/thing
+METHOD: `POST`
+
+BODY:
+
+    {
+        "username": "your-username",
+        "password": "your-password"
+    }
 
 ### Response
 
     HTTP/1.1 201 Created
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
     Status: 201 Created
-    Connection: close
+    Server: Werkzeug/2.3.7 Python/3.12.2
+    Date: Sat, 08 Feb 2025 16:23:38 GMT
     Content-Type: application/json
-    Location: /thing/1
-    Content-Length: 36
+    Content-Length: 32
+    Connection: close
 
-    {"id":1,"name":"Foo","status":"new"}
+    {"message": "User created"}
 
-## Get a specific Thing
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Login (fetch token)
+
+Use this endpoint to log in to an existing user and receive a token.
+
+This token allows you to make requests to endpoints which require authorization.
 
 ### Request
 
-`GET /thing/id`
+URL: `.../login`
 
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/1
+METHOD: `POST`
 
-### Response
+BODY:
 
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 36
-
-    {"id":1,"name":"Foo","status":"new"}
-
-## Get a non-existent Thing
-
-### Request
-
-`GET /thing/id`
-
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/9999
-
-### Response
-
-    HTTP/1.1 404 Not Found
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
-    Status: 404 Not Found
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 35
-
-    {"status":404,"reason":"Not found"}
-
-## Create another new Thing
-
-### Request
-
-`POST /thing/`
-
-    curl -i -H 'Accept: application/json' -d 'name=Bar&junk=rubbish' http://localhost:7000/thing
+    {
+        "username": "your-username",
+        "password": "your-password"
+    }
 
 ### Response
 
     HTTP/1.1 201 Created
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
     Status: 201 Created
-    Connection: close
+    Server: Werkzeug/2.3.7 Python/3.12.2
+    Date: Sat, 08 Feb 2025 16:23:38 GMT
     Content-Type: application/json
-    Location: /thing/2
-    Content-Length: 35
+    Content-Length: 133
+    Connection: close
 
-    {"id":2,"name":"Bar","status":null}
+    {"token": "your-authorization-token"}
 
-## Get list of Things again
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Request
+## Get a list of characters
 
-`GET /thing/`
+### Pagination
 
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/
+Pagination is handled through the query arguments `skip` and `limit`, e.g.:
+
+    `.../api/characters?skip=20&limit=10`
+
+This will result in 20 characters being skipped, and the next 10 being included in the results.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Filtering
+
+The user can choose to filter through the characters by each attribute available:
+`age`, `name`, `house`, `animal`, `death`, `nickname`, `role`, `strength` and `symbol`.
+Multiple attributes can be specified in the same query. This feature is case insensitive.
+
+Additional query arguments `age_more_than` and `age_less_than` have been implemented for more precise querying.
+
+To fetch a character by ID, see [ Get character by ID](#get-character-by-id)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Sorting
+
+Additionally, it is possible to sort the results by a certain attribute, e.g.:
+
+    `.../api/characters?sort_by=house&sort_desc=true`
+
+The default sorting is **ascending** order.
+If desired, the query argument `sort_des=` can be passed, which orders the results in **descending** order.
+The argument's value is irrelevant: `sort_des=true` and `sort_des=no` will **both result in descending order**.
+
+If `sort_des` is passed without `sort_by`, the results will default to be ordered by ID in descending order.
+
+If no query arguments were provided, the API will fetch 20 random characters from the database.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Request Example
+
+URL: `http://localhost:5432/api/characters?house=baratheon&sort_by=role&sort_des=yes`
+
+METHOD: `GET`
 
 ### Response
 
     HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
     Status: 200 OK
-    Connection: close
+    Server: Werkzeug/2.3.7 Python/3.12.2
+    Date: Sat, 08 Feb 2025 16:23:38 GMT
     Content-Type: application/json
-    Content-Length: 74
+    Content-Length: 1214
+    Connection: close
 
-    [{"id":1,"name":"Foo","status":"new"},{"id":2,"name":"Bar","status":null}]
+    [
+        {
+            "age": 16,
+            "animal": "Stag",
+            "death": 5,
+            "house": "Baratheon",
+            "id": 45,
+            "name": "Myrcella Baratheon",
+            "nickname": null,
+            "role": "Princess",
+            "strength": "Cunning",
+            "symbol": "Crowned Stag"
+        },
+        {
+            ...
+        }, ...
+    ]
 
-## Change a Thing's state
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Get character by ID
+
+    .../api/characters/{character_id}
+
+### Request Example
+
+URL: `http://localhost:5432/api/characters/1`
+
+METHOD: `GET`
+
+### Response
+
+    
+    HTTP/1.1 200 OK
+    Status: 200 OK
+    Server: Werkzeug/2.3.7 Python/3.12.2
+    Date: Sat, 08 Feb 2025 16:23:38 GMT
+    Content-Type: application/json
+    Content-Length: 218
+    Connection: close
+
+    {
+        "age": 25,
+        "animal": "Direwolf",
+        "death": null,
+        "house": "Stark",
+        "id": 1,
+        "name": "Jon Snow",
+        "nickname": "King in the North",
+        "role": "King",
+        "strength": "Physically strong",
+        "symbol": "Wolf"
+    }
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Create a new character
+
+This endpoint requires a token provided from [user login](#login-fetch-token).
+
+Use this endpoint to add a character to the database.
+
+Valid character attributes: `age`, `name`, `house`, `animal`, `death`, `nickname`, `role`, `strength` and `symbol`.
+
+Attribute `name` is required, others are optional.
+For a full list of attributes and value types, see [Character Data Models](#character).
+
 
 ### Request
 
-`PUT /thing/:id/status/changed`
+URL: `.../api/characters`
 
-    curl -i -H 'Accept: application/json' -X PUT http://localhost:7000/thing/1/status/changed
+METHOD: `POST`
+
+HEADERS: 
+
+    "Authorization": "your-token"
+
+BODY:
+
+    {
+        "name": "character-name",
+        "house": "character-house",
+        "role": "character-role",
+        "age": 28,
+        ...
+    }
+
+### Response
+
+    HTTP/1.1 201 Created
+    Status: 201 Created
+    Server: Werkzeug/2.3.7 Python/3.12.2
+    Date: Sat, 08 Feb 2025 16:23:38 GMT
+    Content-Type: application/json
+    Content-Length: 185
+    Connection: close
+
+    {
+        "name": "character-name",
+        "house": "character-house",
+        "role": "character-role",
+        "age": 28,
+        ...
+    }
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Update a character
+
+This endpoint requires a token provided from [user login](#login-fetch-token).
+
+Use this endpoint to update a character's data in the database.
+
+### Request
+
+URL: `.../api/characters/{character_id}`
+
+METHOD: `PUT`
+
+HEADERS: 
+
+    "Authorization": "your-token"
+
+BODY:
+
+    {
+        "nickname": "updated-character-nickname",
+        "age": 29,
+        ...
+    }
 
 ### Response
 
     HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
     Status: 200 OK
-    Connection: close
+    Server: Werkzeug/2.3.7 Python/3.12.2
+    Date: Sat, 08 Feb 2025 16:23:38 GMT
     Content-Type: application/json
-    Content-Length: 40
-
-    {"id":1,"name":"Foo","status":"changed"}
-
-## Get changed Thing
-
-### Request
-
-`GET /thing/id`
-
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
-    Status: 200 OK
+    Content-Length: 196
     Connection: close
-    Content-Type: application/json
-    Content-Length: 40
 
-    {"id":1,"name":"Foo","status":"changed"}
+    {
+        "name": "character-name",
+        "nickname": "updated-character-nickname",
+        "age": 29,
+        "house": "character-house",
+        ...
+    }
 
-## Change a Thing
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Request
+## Delete a Character
 
-`PUT /thing/:id`
+This endpoint requires a token provided from [user login](#login-fetch-token).
 
-    curl -i -H 'Accept: application/json' -X PUT -d 'name=Foo&status=changed2' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 41
-
-    {"id":1,"name":"Foo","status":"changed2"}
-
-## Attempt to change a Thing using partial params
+Use this endpoint to delete a character from the database.
 
 ### Request
 
-`PUT /thing/:id`
+URL: `.../api/characters/{character_id}`
 
-    curl -i -H 'Accept: application/json' -X PUT -d 'status=changed3' http://localhost:7000/thing/1
+METHOD: `DELETE`
 
-### Response
+HEADERS: 
 
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 41
-
-    {"id":1,"name":"Foo","status":"changed3"}
-
-## Attempt to change a Thing using invalid params
-
-### Request
-
-`PUT /thing/:id`
-
-    curl -i -H 'Accept: application/json' -X PUT -d 'id=99&status=changed4' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 41
-
-    {"id":1,"name":"Foo","status":"changed4"}
-
-## Change a Thing using the _method hack
-
-### Request
-
-`POST /thing/:id?_method=POST`
-
-    curl -i -H 'Accept: application/json' -X POST -d 'name=Baz&_method=PUT' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 41
-
-    {"id":1,"name":"Baz","status":"changed4"}
-
-## Change a Thing using the _method hack in the url
-
-### Request
-
-`POST /thing/:id?_method=POST`
-
-    curl -i -H 'Accept: application/json' -X POST -d 'name=Qux' http://localhost:7000/thing/1?_method=PUT
-
-### Response
-
-    HTTP/1.1 404 Not Found
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 404 Not Found
-    Connection: close
-    Content-Type: text/html;charset=utf-8
-    Content-Length: 35
-
-    {"status":404,"reason":"Not found"}
-
-## Delete a Thing
-
-### Request
-
-`DELETE /thing/id`
-
-    curl -i -H 'Accept: application/json' -X DELETE http://localhost:7000/thing/1/
+    "Authorization": "your-token"
 
 ### Response
 
     HTTP/1.1 204 No Content
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
     Status: 204 No Content
-    Connection: close
-
-
-## Try to delete same Thing again
-
-### Request
-
-`DELETE /thing/id`
-
-    curl -i -H 'Accept: application/json' -X DELETE http://localhost:7000/thing/1/
-
-### Response
-
-    HTTP/1.1 404 Not Found
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 404 Not Found
-    Connection: close
+    Server: Werkzeug/2.3.7 Python/3.12.2
+    Date: Sat, 08 Feb 2025 16:23:38 GMT
     Content-Type: application/json
-    Content-Length: 35
-
-    {"status":404,"reason":"Not found"}
-
-## Get deleted Thing
-
-### Request
-
-`GET /thing/1`
-
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 404 Not Found
-    Date: Thu, 24 Feb 2011 12:36:33 GMT
-    Status: 404 Not Found
     Connection: close
-    Content-Type: application/json
-    Content-Length: 35
 
-    {"status":404,"reason":"Not found"}
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Delete a Thing using the _method hack
+# Data Models
 
-### Request
+## User
 
-`DELETE /thing/id`
+    {
+        "id": 1,  # int
+        "username": "your-username",  # str
+        "password": "your-password",  # str
+        "created_at": 2025-02-08 18:39:31.521848+01  # timestamp with time zone
+    }
 
-    curl -i -H 'Accept: application/json' -X POST -d'_method=DELETE' http://localhost:7000/thing/2/
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Response
+## Character
 
-    HTTP/1.1 204 No Content
-    Date: Thu, 24 Feb 2011 12:36:33 GMT
-    Status: 204 No Content
-    Connection: close
+    {
+    "id": 2,  # int
+    "age": 24,  # int
+    "death": 8,  # int of what season character died, null if didn't
+    "animal": "Dragon",  # str
+    "house": "Targaryen",  # str
+    "name": "Daenerys Targaryen",  # str
+    "nickname": "Mother of Dragons",  # str
+    "role": "Queen",  # str
+    "strength": "Cunning",  # str
+    "symbol": "Dragon"  # str
+    }
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Contributing
+
+Contributions are what makes the open source community such an amazing place to learn, inspire, and create.
+Any contributions are **greatly appreciated**.
+
+If you have a suggestion that would make this app better, please fork the repo and create a pull request.
+You can also simply open an issue with the tag "enhancement", or [contact me](#contact) via email.
+
+Don't forget to give the project a star!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+**Thanks a lot!**
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+### Top contributors:
+
+<a href="https://github.com/Tombunzel/webeetGotAssignment/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Tombunzel/webeetGotAssignment" alt="contrib.rocks image" />
+</a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Contact
+
+Tom Bunzel - bunzel.tom@gmail.com
+
+Project Link: [https://github.com/Tombunzel/webeetGotAssignment](https://github.com/Tombunzel/webeetGotAssignment)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/Tombunzel/HarmonApp.svg?style=for-the-badge
-[contributors-url]: https://github.com/Tombunzel/HarmonApp/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Tombunzel/HarmonApp.svg?style=for-the-badge
-[forks-url]: https://github.com/Tombunzel/HarmonApp/forks
-[stars-shield]: https://img.shields.io/github/stars/Tombunzel/HarmonApp.svg?style=for-the-badge
-[stars-url]: https://github.com/Tombunzel/HarmonApp/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Tombunzel/HarmonApp.svg?style=for-the-badge
-[issues-url]: https://github.com/Tombunzel/HarmonApp/issues
+[contributors-shield]: https://img.shields.io/github/contributors/Tombunzel/webeetGotAssignment.svg?style=for-the-badge
+[contributors-url]: https://github.com/Tombunzel/webeetGotAssignment/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Tombunzel/webeetGotAssignment.svg?style=for-the-badge
+[forks-url]: https://github.com/Tombunzel/webeetGotAssignment/forks
+[stars-shield]: https://img.shields.io/github/stars/Tombunzel/webeetGotAssignment.svg?style=for-the-badge
+[stars-url]: https://github.com/Tombunzel/webeetGotAssignment/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Tombunzel/webeetGotAssignment.svg?style=for-the-badge
+[issues-url]: https://github.com/Tombunzel/webeetGotAssignment/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/bunzeltom/
 [Flask]: https://img.shields.io/badge/Flask-069486?style=for-the-badge&logo=flask&logoColor=white
@@ -393,11 +527,5 @@ The REST API to the example app is described below.
 [SQLAlchemy-url]: https://www.sqlalchemy.org/
 [PostgreSQL]: https://img.shields.io/badge/PostgreSQL-336790?style=for-the-badge&logo=postgresql&logoColor=white
 [PostgreSQL-url]: https://www.sqlalchemy.org/
-[GoogleCloud]: https://img.shields.io/badge/Google%20Cloud-FFFFFF?style=for-the-badge&logo=googlecloud
-[GoogleCloud-url]: https://cloud.google.com/
-[Docker]: https://img.shields.io/badge/Docker-1C63ED?style=for-the-badge&logo=docker&logoColor=white
-[Docker-url]: https://www.docker.com/
 [JWT]: https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=FF3E00
 [JWT-url]: https://jwt.io/
-[Render]: https://img.shields.io/badge/Render-0D0D0D?style=for-the-badge&logo=render&logoColor=white
-[Render-url]: https://render.com/
