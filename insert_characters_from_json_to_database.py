@@ -22,3 +22,7 @@ def insert_characters_from_json_to_database():
         for character in characters:
             r = requests.post(add_character_url, headers={"Authorization": token}, json=character)
             print(r.status_code)  # print status code as feedback
+
+
+if "__name__" == "__main__":
+    insert_characters_from_json_to_database()
