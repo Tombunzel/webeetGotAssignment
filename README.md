@@ -126,6 +126,7 @@ The API requires a .env file with the following variables:
 
     python3 insert_characters_from_json_to_database.py
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Run the app
 
