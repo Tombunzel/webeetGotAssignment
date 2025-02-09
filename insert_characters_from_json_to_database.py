@@ -24,5 +24,5 @@ def insert_characters_from_json_to_database():
             print(r.status_code)  # print status code as feedback
 
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     insert_characters_from_json_to_database()
